@@ -32,10 +32,7 @@ namespace ArdourUploader
             ardour.Start();
 
             nav.HighlightSession();
-            nav.OpenSession();
-            nav.StartSession();
-            nav.SelectAll();
-            nav.ExportTrack();
+            nav.NavigateArdour();
         }
     }
 }

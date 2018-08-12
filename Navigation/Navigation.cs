@@ -13,6 +13,14 @@ namespace ArdourUploader
         AutoItX3 autoIt = new AutoItX3();
         private string windowName;
 
+        public void NavigateArdour()
+        {
+            OpenSession();
+            StartSession();
+            SelectAll();
+            ExportTrack();
+        }
+
         public void HighlightSession()
         {
             autoIt.MouseMove(500, 375);
@@ -64,8 +72,6 @@ namespace ArdourUploader
             autoIt.Send(@"C:\Users\ciara\OneDrive\Desktop\ArdourTracks\");
             autoIt.Send("{ENTER}");
             autoIt.Send("{ENTER}");
-
         }
-
     }
 }
