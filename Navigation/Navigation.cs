@@ -25,7 +25,7 @@ namespace ArdourUploader
         {
             autoIt.MouseMove(500, 375);
             Thread.Sleep(2000);
-            autoIt.MouseClick("primary"); // Highlights the first session
+            autoIt.MouseClick("primary"); // Highlights the first session only
         }
 
         public void OpenSession()

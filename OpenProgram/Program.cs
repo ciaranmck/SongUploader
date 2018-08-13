@@ -14,6 +14,7 @@ namespace ArdourUploader
         static void Main(string[] args)
         {
             Navigation nav = new Navigation();
+            Uploader uploader = new Uploader();
 
             //TaskService ts = new TaskService();
             //TaskDefinition td = ts.NewTask();
@@ -33,6 +34,9 @@ namespace ArdourUploader
 
             nav.HighlightSession();
             nav.NavigateArdour();
+
+            //uploader.LoadSoundcloud();
+
         }
     }
 }
