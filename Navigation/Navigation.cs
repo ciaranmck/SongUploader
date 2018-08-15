@@ -72,10 +72,6 @@ namespace ArdourUploader
         public void SelectAll()
         {
             autoIt.Sleep(4000);
-            //windowName = autoIt.WinGetTitle("[ACTIVE]");
-            //autoIt.WinActivate(windowName);
-
-            autoIt.Sleep(2000);
 
             autoIt.Send("{g}");
 
@@ -131,9 +127,10 @@ namespace ArdourUploader
 
         public void RenameFiles()
         {
-            foreach (string fileName in Directory.GetFiles(@"C:\Users\ciara\OneDrive\Desktop\ArdourTracks\", "*.wav")) // doesn't rename for some reason
+            foreach (string fileName in Directory.GetFiles(@"C:\Users\ciara\OneDrive\Desktop\ArdourTracks", "*.wav")) // doesn't rename for some reason, fileCheck might not have the right path
             {
-                File.AppendAllText(fileName, Environment.NewLine + " - Ardour");
+                File.AppendAllText(fileName, fileName + " - Ardour");
+                Console.WriteLine(fileName);
             }
         }
     }
