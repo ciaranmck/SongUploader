@@ -14,9 +14,10 @@ namespace ArdourUploader
     {
         public void LoadSoundcloud()
         {
-            IWebDriver driver = new ChromeDriver(@"C:\Users\ciara\source\repos\ProToolsUploader\packages\Selenium.WebDriver.ChromeDriver.2.41.0\driver\win32");
-
-            driver.Url = "http://www.soundcloud.com";
+            IWebDriver driver = new ChromeDriver(@"C:\Users\ciara\source\repos\ProToolsUploader\packages\Selenium.WebDriver.ChromeDriver.2.41.0\driver\win32")
+            {
+                Url = "http://www.soundcloud.com"
+            };
         }
     }
 }

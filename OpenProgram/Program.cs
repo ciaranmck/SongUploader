@@ -35,8 +35,8 @@ namespace ArdourUploader
             nav.HighlightSession();
             nav.NavigateArdour();
 
-            //uploader.LoadSoundcloud();
-
+            nav.BounceAllRemainingTracks();
+            uploader.LoadSoundcloud();
         }
     }
 }

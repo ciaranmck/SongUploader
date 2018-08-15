@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -10,7 +11,7 @@ namespace ArdourUploader
 {
     public class Navigation
     {
-        AutoItX3 autoIt = new AutoItX3();
+        private AutoItX3 autoIt = new AutoItX3();
         private string windowName;
 
         public void NavigateArdour()
@@ -19,6 +20,35 @@ namespace ArdourUploader
             StartSession();
             SelectAll();
             ExportTrack();
+        }
+
+        public void BounceAllRemainingTracks()
+        {
+            for (int i = 1; i <= 100; i++)
+            {
+                RenameFiles();
+
+                OpenSessionShortcut();
+                SelectNextSession(i);
+
+                autoIt.Sleep(5000);
+
+                windowName = autoIt.WinGetTitle("[ACTIVE]");
+                autoIt.WinActivate(windowName);
+
+                string fileCheck = @"C:\Users\ciara\OneDrive\Desktop\ArdourTracks\" + windowName + "_session.wav";
+                Console.WriteLine(fileCheck); // check to see full filepath
+
+                if (File.Exists(fileCheck)) // if that file path exists, break the loop and close ardour, but currently stays within the for loop
+                {
+                    break;
+                }
+                else
+                {
+                    SelectAll();
+                    ExportTrack();
+                }
+            }
         }
 
         public void HighlightSession()
@@ -42,8 +72,8 @@ namespace ArdourUploader
         public void SelectAll()
         {
             autoIt.Sleep(4000);
-            windowName = autoIt.WinGetTitle("[ACTIVE]");
-            autoIt.WinActivate(windowName);
+            //windowName = autoIt.WinGetTitle("[ACTIVE]");
+            //autoIt.WinActivate(windowName);
 
             autoIt.Sleep(2000);
 
@@ -72,6 +102,39 @@ namespace ArdourUploader
             autoIt.Send(@"C:\Users\ciara\OneDrive\Desktop\ArdourTracks\");
             autoIt.Send("{ENTER}");
             autoIt.Send("{ENTER}");
+
+            autoIt.Sleep(2000);
+        }
+
+        public void OpenSessionShortcut()
+        {
+            autoIt.Send("{CTRLDOWN}"); // shortcut for opening session's from already within Ardour
+            autoIt.Send("{o}");
+            autoIt.Send("{CTRLUP}");
+
+            autoIt.Sleep(1000);
+        }
+
+        public void SelectNextSession(int count)
+        {
+            autoIt.Send("{DOWN " + count.ToString() + "}"); // arrow down to next track, key press increments by one each time
+            autoIt.Send("{ENTER}"); // opens session folder
+
+            autoIt.Sleep(1000);
+
+            autoIt.Send("{END}"); // navigates to session file
+            autoIt.Sleep(1000);
+            autoIt.Send("{ENTER}"); // opens track
+
+            autoIt.Sleep(1000);
+        }
+
+        public void RenameFiles()
+        {
+            foreach (string fileName in Directory.GetFiles(@"C:\Users\ciara\OneDrive\Desktop\ArdourTracks\", "*.wav")) // doesn't rename for some reason
+            {
+                File.AppendAllText(fileName, Environment.NewLine + " - Ardour");
+            }
         }
     }
 }
