@@ -16,6 +16,7 @@ namespace ArdourUploader
 
         public void NavigateArdour()
         {
+            HighlightSession();
             OpenSession();
             StartSession();
 
@@ -77,7 +78,7 @@ namespace ArdourUploader
             return File.Exists(fileCheck);
         }
 
-        public void HighlightSession()
+        private void HighlightSession()
         {
             autoIt.MouseMove(500, 375);
             Thread.Sleep(2000);

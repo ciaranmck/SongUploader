@@ -31,10 +31,9 @@ namespace ArdourUploader
             ardour.StartInfo.FileName = @"C:\Program Files\Ardour5\bin\Ardour.exe";
             ardour.Start();
 
-            nav.HighlightSession();
             nav.NavigateArdour();
-
             nav.BounceAllRemainingTracks();
+
             //nav.RenameFiles();
             uploader.LoadSoundcloud();
         }
