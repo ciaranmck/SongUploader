@@ -20,7 +20,7 @@ namespace ArdourUploader
             OpenSession();
             StartSession();
 
-            Thread.Sleep(2000);
+            autoIt.Sleep(2000);
 
             FileCheckAndExport();
         }
@@ -81,7 +81,7 @@ namespace ArdourUploader
         private void HighlightSession()
         {
             autoIt.MouseMove(500, 375);
-            Thread.Sleep(2000);
+            autoIt.Sleep(2000);
             autoIt.MouseClick("primary"); // Highlights the first session only
         }
 
@@ -94,7 +94,7 @@ namespace ArdourUploader
         private void StartSession()
         {
             autoIt.MouseClick("primary", 800, 235, 2);
-            Thread.Sleep(2000);
+            autoIt.Sleep(2000);
         }
 
         private void SelectAll()
