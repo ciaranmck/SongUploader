@@ -30,7 +30,7 @@ namespace ArdourUploader
             for (int i = 1; i <= 50; i++)
             {
                 OpenSessionShortcut();
-                SelectNextSession(i); // failing repeatedly due to port assignment issue within Ardour. Does not appear to be symptomatic of the code
+                SelectNextSession(i); // failing repeatedly due to port assignment issue within Ardour. Possibly need to look into closing out ASIO4ALL completely?
 
                 autoIt.Sleep(2000);
 
