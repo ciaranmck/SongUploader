@@ -40,7 +40,7 @@ namespace ArdourUploader
 
                 if (File.Exists(fileCheck))
                 {
-                    Console.WriteLine("This filepath exists already");
+                    Console.WriteLine("The track " + windowName + " exists already");
                     break;
                 }
                 else
@@ -68,7 +68,7 @@ namespace ArdourUploader
 
             if (File.Exists(fileCheck))
             {
-                Console.WriteLine("This filepath exists already");
+                Console.WriteLine("The track " + windowName + " exists already");
             }
             else
             {
