@@ -60,7 +60,7 @@ namespace ArdourUploader
             }
         }
 
-        private bool FileCheckAndExport() // Unused
+        private bool FileCheckAndExport()
         {
             windowName = autoIt.WinGetTitle("[ACTIVE]");
 
