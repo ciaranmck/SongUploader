@@ -35,6 +35,7 @@ namespace ArdourUploader
             nav.NavigateArdour();
 
             nav.BounceAllRemainingTracks();
+            //nav.RenameFiles();
             uploader.LoadSoundcloud();
         }
     }

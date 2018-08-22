@@ -18,37 +18,43 @@ namespace ArdourUploader
         {
             OpenSession();
             StartSession();
-            SelectAll();
-            ExportTrack();
+            FileCheckAndExport();
         }
 
         public void BounceAllRemainingTracks()
         {
-            for (int i = 1; i <= 100; i++)
+            for (int i = 1; i <= 50; i++)
             {
-                RenameFiles();
-
                 OpenSessionShortcut();
-                SelectNextSession(i);
+                SelectNextSession(i); // failing repeatedly due to port assignment issue within Ardour. Does not appear to be symptomatic of the code
 
                 autoIt.Sleep(5000);
 
-                windowName = autoIt.WinGetTitle("[ACTIVE]");
-                autoIt.WinActivate(windowName);
-
-                string fileCheck = @"C:\Users\ciara\OneDrive\Desktop\ArdourTracks\" + windowName + "_session.wav";
-                Console.WriteLine(fileCheck); // check to see full filepath
-
-                if (File.Exists(fileCheck)) // if that file path exists, break the loop and close ardour, but currently stays within the for loop
+                FileCheckAndExport(); // Condition is true if the file already exists
+                if (true)
                 {
                     break;
                 }
-                else
-                {
-                    SelectAll();
-                    ExportTrack();
-                }
+
             }
+        }
+
+        private bool FileCheckAndExport()
+        {
+            windowName = autoIt.WinGetTitle("[ACTIVE]");
+
+            string fileCheck = @"C:\Users\ciara\OneDrive\Desktop\ArdourTracks\" + windowName + "_session.wav";
+
+            if (File.Exists(fileCheck))
+            {
+                Console.WriteLine(File.Exists("This filepath exists already"));
+            }
+            else
+            {
+                SelectAll();
+                ExportTrack();
+            }
+            return File.Exists(fileCheck);
         }
 
         public void HighlightSession()
@@ -82,12 +88,16 @@ namespace ArdourUploader
 
         public void ExportTrack()
         {
+            windowName = autoIt.WinGetTitle("[ACTIVE]");
+
             autoIt.Send("{ALTDOWN}"); // opens export window
             autoIt.Send("{e}");
             autoIt.Send("{ALTUP}");
 
             autoIt.MouseClick("primary", 1100, 85); // Opens export presets
             autoIt.MouseClick("primary", 1100, 95); // Selects export template (AutomatedExport)
+
+            NameTrack(windowName);
 
             autoIt.MouseMove(850, 230); // highlights output path
             autoIt.MouseClick("primary");
@@ -100,6 +110,15 @@ namespace ArdourUploader
             autoIt.Send("{ENTER}");
 
             autoIt.Sleep(2000);
+        }
+
+        private void NameTrack(string name)
+        {
+            autoIt.WinActivate(name);
+
+            autoIt.MouseMove(682, 296);
+            autoIt.MouseClick("primary");
+            autoIt.Send(windowName);
         }
 
         public void OpenSessionShortcut()
@@ -125,11 +144,19 @@ namespace ArdourUploader
             autoIt.Sleep(1000);
         }
 
+        public void CloseSession()
+        {
+            autoIt.MouseMove(60, 40);
+            autoIt.MouseClick("primary");
+            autoIt.MouseMove(60, 120);
+            autoIt.MouseClick("primary");
+        }
+
         public void RenameFiles()
         {
-            foreach (string fileName in Directory.GetFiles(@"C:\Users\ciara\OneDrive\Desktop\ArdourTracks", "*.wav")) // doesn't rename for some reason, fileCheck might not have the right path
+            foreach (string fileName in Directory.GetFiles(@"C:\Users\ciara\OneDrive\Desktop\ArdourTracks", "*.wav"))
             {
-                File.AppendAllText(fileName, fileName + " - Ardour");
+                File.Move(fileName, "1"); // filepath is correct, but adds Ardour to the very end after .wav, and creates a new file of wrong format
                 Console.WriteLine(fileName);
             }
         }
